@@ -579,7 +579,7 @@
         }
 
         function logout() {
-            window.location.href = "home.html";
+            window.location.href = "index.html";
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -806,7 +806,7 @@ function ongoingGame(rowIndex) {
     var newRow = ongoingTable.insertRow();
     // Copy cell contents from the original row to the ongoing games table row
     for (var i = 0; i < row.cells.length; i++) {
-        if (i !== 7 && i !==8 && i !== 9) { // Exclude Edit and Ongoing buttons
+        if (i !== 7 && i !== 8 && i !== 9) { // Exclude Edit and Ongoing buttons
             var newCell = newRow.insertCell();
             newCell.innerHTML = row.cells[i].innerHTML;
         }
@@ -845,8 +845,6 @@ function ongoingGame(rowIndex) {
     // Update the localStorage with the modified ongoing games array
     localStorage.setItem('ongoingGames', JSON.stringify(ongoingGames));
 }
-
-
 
 // Function to load ongoing games from localStorage when the page loads
 function loadOngoingGames() {
