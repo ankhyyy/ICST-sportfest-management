@@ -565,7 +565,7 @@
 
 </body>
 <script type="text/javascript">
-     function toggleMenu() {
+    function toggleMenu() {
             var menu = document.getElementById("floatingMenu");
             if (menu.style.display === "none" || menu.style.display === "") {
                 menu.style.display = "flex";
@@ -579,7 +579,7 @@
         }
 
         function logout() {
-            window.location.href = "index.html";
+            window.location.href = "home.html";
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -806,13 +806,13 @@ function ongoingGame(rowIndex) {
     var newRow = ongoingTable.insertRow();
     // Copy cell contents from the original row to the ongoing games table row
     for (var i = 0; i < row.cells.length; i++) {
-        if (i !== 7 && i !== 9) { // Exclude Edit and Ongoing buttons
+        if (i !== 7 && i !==8 && i !== 9) { // Exclude Edit and Ongoing buttons
             var newCell = newRow.insertCell();
             newCell.innerHTML = row.cells[i].innerHTML;
         }
     }
 
-    // // Add delete button cell
+    // Add delete button cell
     var deleteCell = newRow.insertCell();
     deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
 
@@ -847,6 +847,7 @@ function ongoingGame(rowIndex) {
 }
 
 
+
 // Function to load ongoing games from localStorage when the page loads
 function loadOngoingGames() {
     // Retrieve the saved ongoing games from localStorage
@@ -859,27 +860,38 @@ function loadOngoingGames() {
 
         // Iterate over each ongoing game
         ongoingGames.forEach(function(game) {
-            // Create a new row for the ongoing games table
-            var newRow = ongoingTable.insertRow();
-            // Insert cells for each field
-            for (var prop in game) {
-                var newCell = newRow.insertCell();
-                newCell.innerHTML = game[prop];
+            // Check if the row already exists (to prevent duplication)
+            var existingRow = ongoingTable.querySelector('tr[data-date="' + game.date + '"][data-team1="' + game.team1 + '"][data-team2="' + game.team2 + '"]');
+            if (!existingRow) {
+                // Create a new row for the ongoing games table
+                var newRow = ongoingTable.insertRow();
+
+                // Set data attributes for identification
+                newRow.setAttribute('data-date', game.date);
+                newRow.setAttribute('data-team1', game.team1);
+                newRow.setAttribute('data-team2', game.team2);
+
+                // Insert cells for each field
+                for (var prop in game) {
+                    var newCell = newRow.insertCell();
+                    newCell.textContent = game[prop];
+                }
+
+                // Add delete button cell
+                var deleteCell = newRow.insertCell();
+                deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+
+                // Add progress button cell
+                var progressCell = newRow.insertCell();
+                progressCell.innerHTML = '<button class="progress" title="Mark as Completed" onclick="markCompleted(this)"><span class="material-symbols-outlined" style="font-size:18px;">done</span></button>';
             }
-
-            // Add delete button cell
-            var deleteCell = newRow.insertCell();
-            deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-
-            // Add progress button cell
-            var progressCell = newRow.insertCell();
-            progressCell.innerHTML = '<button class="progress" title="Mark as Completed" onclick="markCompleted(this)"><span class="material-symbols-outlined" style="font-size:18px;">done</span></button>';
         });
 
         // Display the ongoing games table
         document.getElementById('ongoingTableContainer').style.display = 'block';
     }
 }
+
 
 // Function to delete ongoing game
 function deleteOngoingGame(button) {
