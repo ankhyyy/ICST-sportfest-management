@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">	
+		body {
+		    overflow-x: hidden;
+		    margin: 0;
+		    padding: 0;
+		    background: #FDE74C;
+		    background-attachment: fixed;
+		}
+		.wave {
+		  display: block;
+		  position: relative;
+		  height: 81px;
+		  width: 102%;
+		  background: #09860b;
+		  transform: scale(1, 5.5);
+		  z-index: 1;
+		}
+
+		.wave:before {
+		  content: "";
+		  display: block;
+		  position: absolute;
+		  border-radius: 100%;
+		  width: 100%;
+		  height: 300px;
+		  background-color: #FDE74C;
+		  right: -24%;
+		  top: 60px;
+		}
+
+		.wave:after {
+		  content: "";
+		  display: block;
+		  position: absolute;
+		  border-radius: 100%;
+		  width: 100%;
+		  height: 300px;
+		  background-color: #09860b;
+		  left: -26%;
+		  top: -200px;
+		  clip-path: ellipse(100% 15% at -15% 100%);
+		}
+
+		img {
+			position: absolute;
+		    z-index: 9999;
+		    left: 50%;
+		    transform: translateX(-50%);
+		}
+
+		.signup {
+			z-index: 9999;
+			position: absolute;
+			font-size: 200px;
+			color: #fff;
+			margin-left: 40px;
+		}
+
+		.slant {
+	    	width: 5px;
+	    	height: 40px;
+	    	background-color: rgb(245, 212, 92);
+	    	margin-right: 6px;
+	    	transform: skew(-25deg);
+	    	margin-top: 80px;
+	    	box-shadow: 0 0 10px rgba(245, 212, 92, 0.7);
+	    }
+	    .light {
+	    	opacity: .4;
+	    	display: flex;
+	    }
+
+	    .neutral {
+	    	opacity: .6;
+	    	display: flex;
+	    }
+
+	    .visible {
+	    	opacity: .8;
+	    	display: flex;
+	    }
+
+	    .normal {
+	    	display: flex;
+	    }
+
+	    .top-slant {
+	    	display: flex;
+	    	margin-left: 50px;
+	    	z-index: 9999;
+	    	position: absolute;
+	    }
+	    .arrows {
+	    	margin-top: 70px;
+	    	margin-left: 20px;
+	    	display: flex;
+	    }
+	    .arrow {
+			border: solid rgb(245, 212, 92);
+			border-width: 0 4px 4px 0;
+			display: inline-block;
+			padding: 13px;
+			}
+		.right {
+			transform: rotate(-45deg);
+			-webkit-transform: rotate(-45deg);
+		}
+		.bottom-slant {
+	    	display: flex;
+	    	float: right;  
+	    	margin-left: 900px;
+	    	margin-top: 400px;
+	    	z-index: 9999;
+	    	position: absolute;
+	    }
+	    .diagonal {
+	    	width: 5px;
+	    	height: 40px;
+	    	background-color: #09860b;
+	    	margin-right: 6px;
+	    	transform: skew(-25deg);
+	    	margin-top: 80px;
+	    	box-shadow: 0 0 10px rgba(9, 134, 11, 0.7);
+	    }
+	    .arrows-down {
+	    	margin-top: 70px;
+	    	margin-left: 20px;
+	    	display: flex;
+
+	    }
+	    .downarrow {
+			border: solid #09860b;
+			border-width: 0 4px 4px 0;
+			display: inline-block;
+			padding: 13px;
+		}
+
+		.socials {
+			position: absolute;
+			display: flex;
+			z-index: 9999;
+			color: #000;
+			bottom: 0;
+			margin-bottom: 50px;
+			margin-left: 55px;
+			font-size: 25px;
+		}
+		i {
+			margin-right: 20px;
+			color: #09860b;
+		}
+		.logo img {
+			height: 40px;
+			bottom: 0;
+			margin-bottom: 45px;
+			margin-left: 200px;
+			left: 0
+		}
+		.ssc img {
+			margin-left: 250px;
+			height: 50px;
+			margin-bottom: 40px;
+		}
+		.main-text {
+			font-family: 'San Marino Beach';
+			font-size: 140px;
+			text-align: center;
+			z-index: 9999;
+			position: absolute;
+			color: #013220;
+			transform: translateX(-50%);
+			left: 50%;
+		}
+
+		.sign {
+		    position: absolute;
+		    z-index: 9999;
+		    bottom: 0; /* Adjust the position from bottom */
+		    left: 50%; /* Center horizontally */
+		    transform: translateX(-50%);
+		    text-align: center; /* Center align the text */
+		    width: 100%; /* Take up full width */
+		    color: #000; /* Set text color to white */
+		}
+
+		.sign p {
+		    font-size: 15px; /* Adjust font size */
+		    /*font-family: 'Poppins';*/
+		}
+
+		.sign a {
+			color: #000;
+			font-weight: bold;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="top-slant">
+	    <div class="light">
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+    </div>
+
+    <div class="neutral">
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+    </div>	
+
+    <div class="visible">
+    	<div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+    </div>
+
+    <div class="normal">
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+	    <div class="slant"></div>
+    </div>
+    
+    <div class="arrows">
+    	<p><i class="arrow right"></i></p>
+    	<p><i class="arrow right"></i></p>
+    </div>
+
+    </div>
+
+	<div class="wave-container">
+		<div class="wave"></div>
+	</div>
+
+	<img src="img/athlete.png" alt="Man Image" width="500" height="500">
+
+	<div class="socials">
+		<div> 
+			<a href="https://web.facebook.com/ICSTOfficial"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+		</div>
+		<div>
+			<a href="https://home.icst.edu.ph"><i class="fa fa-globe" aria-hidden="true"></i></a>
+		</div>
+		<div>
+			<a href="#" title="info@icst.edu.ph"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+		</div>
+	</div>
+
+	<div class="logo">
+		<div class="icst"><img src="img/logoicst.png"></div>
+		<div class="ssc"><img src="img/image.png"></div>
+	</div>
+
+	<div class="bottom-slant">
+    <div class="light">
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+    </div>
+
+    <div class="neutral">
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+    </div>	
+
+    <div class="visible">
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+    </div>
+
+    <div class="normal">
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+	    <div class="diagonal"></div>
+    </div>
+    
+    <div class="arrows-down">
+    	<p><i class="downarrow right"></i></p>
+    	<p><i class="downarrow right"></i></p>
+    </div>
+    
+    </div>
+
+    <div class="sign"><p>Want an access to the sports festival event schedules? Click if you're an <a href="signin-admin.html">admin</a> or <a href="signup-user.html">user</a></p></div>
+</body>
+</html>

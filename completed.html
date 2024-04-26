@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Completed Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+        }
+        body {
+            font-family: 'Poppins';
+            background: #FDE74C;
+            position: relative; /* Necessary for absolute positioning */
+            min-height: 1000vh; /* Ensures the body takes at least the height of the viewport */
+        }
+        .main-header {
+            text-align: center;
+            position: relative; /* Required for positioning the icons */
+
+        }
+        .main-header img {
+            max-width: 100%; /* Ensures the image doesn't exceed its container */
+            height: auto; /* Ensures the image retains its aspect ratio */
+        }
+        .nav-icon {
+            position: absolute;
+            top: 20%; /* Adjust vertical position */
+            left: 50%; /* Adjust horizontal position */
+            transform: translate(-50%, -50%); /* Center the icon */
+            z-index: 1; /* Ensure the icon is above the image */
+            display: flex;
+        }
+        .nav-icon button {
+            background: #fff;
+            width: auto;
+            height: 60px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: center; /* Align items horizontally */
+            font-size: 24px;
+            color: #000;
+            margin-right: 10px;
+            padding: 10px;
+        }
+
+        .material-symbols-outlined {
+            font-size: 23px;
+        }
+
+        .sports-name {
+            font-family: 'Poppins SemiBold';
+            font-size: 12px;
+        }
+
+        th {
+            background-color: #09860b;
+            color: #ffffff;
+            text-align: center;
+            font-family: 'Poppins SemiBold';
+            font-size: 1.15em;
+            text-align: center;
+            padding: 7px;
+        }
+
+        #completedEventsTable {
+            margin: 0 auto;
+            background: #fff;
+            border-collapse: collapse;
+            width: 900px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.30);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 1260px;
+            background-color: #09860b;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+
+        button:active {
+            background-color: #a4de02;
+            box-shadow: 0 5px #fff;
+            transform: translateY(4px);
+        }
+
+        .container {
+            position: fixed;
+            margin: auto 1260px auto 30px;
+            top: 100px;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+            margin-bottom: 90px;
+            width: 50px;
+            height: 50px;
+            z-index: 3;
+      }
+          .search {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background: #09860b;
+            border-radius: 50%;
+            transition: all 1s;
+            z-index: 4;
+            &:hover {
+              cursor: pointer;
+            }
+            /*line in search icon*/
+            &::before {
+              content: "";
+              position: absolute;
+              margin: auto;
+              top: 17px;
+              right: 0;
+              bottom: 0;
+              left: 20px;
+              width: 11px;
+              height: 2px;
+              background: white;
+              transform: rotate(45deg);
+              transition: all .5s;
+            }
+            /*circle in search icon*/
+            &::after {
+              content: "";
+              position: absolute;
+              margin: auto;
+              top: -5px;
+              right: 0;
+              bottom: 0;
+              left: -5px;
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              border: 2px solid white;
+              transition: all .5s;
+            }
+          }
+          input {
+            font-family: 'Poppins';
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            outline: none;
+            border: none;
+            background: #09860b;
+            color: #fff;
+            padding: 0 80px 0 20px;
+            border-radius: 30px;
+            transition: all 1s;
+            opacity: 0;
+            z-index: 5;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            &:hover {
+              cursor: pointer;
+            }
+            /*oval for search*/
+            &:focus {
+              width: 300px;
+              opacity: 1;
+              cursor: text;
+            }
+            /*circle container for cancel icon*/
+            &:focus ~ .search {
+              right: -500px;
+              background: #fff;
+              z-index: 6;
+              /*for the cancel icon*/
+              &::before {
+                top: 0;
+                left: 0;
+                width: 25px;
+                background: #000;
+              }
+              &::after {
+                top: 0;
+                left: 0;
+                width: 25px;
+                height: 2px;
+                border: none;
+                background: #000;
+                border-radius: 0%;
+                transform: rotate(-45deg);
+              }
+            }
+            /*for text inside the search bar*/
+            &::placeholder {
+              color: white;
+              opacity: 0.5;
+              font-weight: bold;
+            }
+          }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-header">
+        <img src="img/head.svg" alt="Header Image">
+        <div class="nav-icon">
+            <button onclick="filterSchedulesBySport('Dama')">
+                <span class="material-symbols-outlined" style="border: none;">chess</span>
+                <span class="sports-name">Dama</span>
+            </button>  
+            <button onclick="filterSchedulesBySport('Basketball')">
+                <span class="material-symbols-outlined">sports_basketball</span>
+                <span class="sports-name">Basketball</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Volleyball')">
+                <span class="material-symbols-outlined">sports_volleyball</span>
+                <span class="sports-name">Volleyball</span>
+            </button>      
+            <button onclick="filterSchedulesBySport('Table Tennis')">
+                <span class="material-symbols-outlined" style="border: none;">sports_tennis</span>
+                <span class="sports-name">Table Tennis</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Chess')">
+                <span class="material-symbols-outlined" style="border: none;">chess</span>
+                <span class="sports-name">Chess</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Badminton')">
+                <span class="material-symbols-outlined" style="border: none;">sports_tennis</span>
+                <span class="sports-name">Badminton</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Athletics')">
+                <span class="material-symbols-outlined" style="border: none;">sprint</span>
+                <span class="sports-name">Athletics</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Long Jump')">
+                <span class="material-symbols-outlined" style="border: none;">falling</span>
+                <span class="sports-name">Long Jump</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Scrabble')">
+                <span class="material-symbols-outlined" style="border: none;">neurology</span>
+                <span class="sports-name">Scrabble</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Sungka')">
+                <span class="material-symbols-outlined" style="border: none;">cognition</span>
+                <span class="sports-name">Sungka</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Shot Put')">
+                <span class="material-symbols-outlined">sports_handball</span>
+                <span class="sports-name">Shot Put</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Darts')">
+                <span class="material-symbols-outlined">track_changes</span>
+                <span class="sports-name">Darts</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Mobile Legends')">
+                <span class="material-symbols-outlined">sports_esports</span>
+                <span class="sports-name">ML</span>
+            </button>
+        </div>
+    </div>
+
+    <table id="completedEventsTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Sport</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- completed events will be displayed here -->
+        </tbody>
+    </table>
+
+    </div>
+
+    <!-- search bar -->
+
+    <div class="container">
+        <input type="text" placeholder="Search...">
+    <div class="search"></div>
+    </div>
+
+    <!-- Floating button -->
+    <div class="floating-button" onclick="backTo()">
+        <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
+    </div>
+</body>
+<script type="text/javascript">
+
+        function backTo() {
+            window.location.href = "user.html";
+        }
+
+        function create() {
+            window.open("create.html");
+        }
+
+        function logout() {
+            window.location.href = "home.html";
+        }
+
+        // Function to retrieve and display ongoing schedules from localStorage
+        function displayCompletedSchedules() {
+            var tableBody = document.querySelector('#completedEventsTable tbody');
+            var completedString = localStorage.getItem('completedGames');
+
+            if (completedString) {
+                var completedEvents = JSON.parse(completedString);
+                var completedEventsHTML = '';
+
+                completedEvents.forEach(function(event) {
+                    completedEventsHTML += '<tr>';
+                    completedEventsHTML += '<td>' + event.date + '</td>';
+                    completedEventsHTML += '<td>' + event.time + '</td>';
+                    completedEventsHTML += '<td>' + event.sport + '</td>';
+                    completedEventsHTML += '<td>' + event.category + '</td>';
+                    completedEventsHTML += '<td>' + event.type + '</td>';
+                    completedEventsHTML += '<td>' + event.team1 + '</td>';
+                    completedEventsHTML += '<td>' + event.team2 + '</td>';
+                    completedEventsHTML += '</tr>';
+                });
+
+                tableBody.innerHTML = completedEventsHTML;
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="7">No completed events found.</td></tr>';
+            }
+        }
+
+        // Call the function to display ongoing schedules when the page loads
+        displayCompletedSchedules();
+
+         // Global variable to keep track of the currently filtered sport
+        var currentFilter = '';
+
+        function filterSchedulesBySport(sport) {
+            var tableRows = document.querySelectorAll('#completedEventsTable tbody tr');
+            
+            // If the same sport button is clicked again, reset the filter and display all schedules
+            if (sport === currentFilter) {
+                tableRows.forEach(function(row) {
+                    row.style.display = ''; // Show all rows
+                });
+                currentFilter = ''; // Reset the filter
+            } else {
+                tableRows.forEach(function(row) {
+                    var sportCell = row.querySelector('td:nth-child(3)'); // Assuming sport is in the third column
+                    if (sportCell.textContent.trim() === sport) {
+                        row.style.display = ''; // Show row if it matches the selected sport
+                    } else {
+                        row.style.display = 'none'; // Hide row if it doesn't match the selected sport
+                    }
+                });
+                currentFilter = sport; // Set the current filter
+            }
+        }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    displayCompletedSchedules();
+    
+    // Add event listener to search input field
+    var searchInput = document.querySelector('input[type="text"]');
+    searchInput.addEventListener('input', function() {
+        var searchKeyword = this.value.trim().toLowerCase();
+        filterSchedulesByKeyword(searchKeyword);
+    });
+});
+
+function filterSchedulesByKeyword(keyword) {
+    var tableRows = document.querySelectorAll('#completedEventsTable tbody tr');
+    
+    tableRows.forEach(function(row) {
+        var cells = row.querySelectorAll('td'); // Get all cells in the row
+        var matchFound = false;
+        cells.forEach(function(cell) {
+            if (cell.textContent.trim().toLowerCase().includes(keyword)) {
+                matchFound = true;
+            }
+        });
+        if (matchFound) {
+            row.style.display = ''; // Show row if keyword matches any cell
+        } else {
+            row.style.display = 'none'; // Hide row if no match is found
+        }
+    });
+}
+
+</script>
+</html>

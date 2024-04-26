@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Game Schedule</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style type="text/css">
+    	* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+        }
+        body {
+            font-family: 'Poppins SemiBold';
+            background: #FDE74C;
+            position: relative; /* Necessary for absolute positioning */
+            min-height: 100vh; /* Ensures the body takes at least the height of the viewport */
+        }
+        .main-header {
+            text-align: center;
+            position: relative; /* Required for positioning the icons */
+        }
+        .main-header img {
+            max-width: 100%; /* Ensures the image doesn't exceed its container */
+            height: auto; /* Ensures the image retains its aspect ratio */
+        }
+
+        .events {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		}
+
+		.game {
+		    background: #fff;
+		    height: 280px;
+		    width: 300px;
+		    border: solid transparent;
+		    border-radius: 20px;
+		    margin: 0 30px;
+		    display: flex;
+		    flex-direction: column; /* Align items in a column */
+		    justify-content: center;
+		    align-items: center;
+		    box-shadow: 0 0 30px rgba(0, 0, 0, 0.50);
+		}
+
+		.events img {
+		    width: 70px;
+		}
+
+		.event-title {
+		    margin-top: 10px; /* Adjust margin for space between image and title */
+		    text-align: center; /* Center text horizontally */
+		}
+
+		.logout {
+		    position: absolute;
+		    top: 30px; /* Adjust top position */
+		    right: 50px; /* Adjust right position */
+		    cursor: pointer;
+		    color: #fff; /* Color for the icon */
+		    font-size: 50px;
+		}
+
+		.logout:hover {
+		    color: #FDE74C; /* Color change on hover */
+		}
+
+		#upcoming, #ongoing, #completed {
+			border-top: solid green 6px;
+		}
+
+		#upcoming:hover {
+		    cursor: pointer;
+		}
+
+		#upcoming:hover {
+		    transform: scale(1.1); /* Zoom in effect */
+		    transition: transform 0.3s ease; /* Smooth transition */
+		}
+
+		#ongoing:hover {
+		    cursor: pointer;
+		}
+
+		#ongoing:hover {
+		    transform: scale(1.1); /* Zoom in effect */
+		    transition: transform 0.3s ease; /* Smooth transition */
+		}
+
+		#completed:hover {
+		    cursor: pointer;
+		}
+
+		#completed:hover {
+		    transform: scale(1.1); /* Zoom in effect */
+		    transition: transform 0.3s ease; /* Smooth transition */
+		}
+
+        
+    </style>
+</head>
+<body>
+	<div class="main-header">
+        <img src="img/head.svg" alt="Header Image">
+        <div class="logout" onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></div>
+	</div>
+
+	<div class="events">
+		<div id="upcoming" class="game" onclick="navigateTo('upcoming.html')">
+			<div class="game-icon"><img src="img/upcoming.png"></i></div>
+			<div class="event-title">Upcoming Game Events</div>
+		</div>
+		<div id="ongoing" class="game" onclick="navigateTo('ongoing.html')">
+			<div class="game-icon"><img src="img/ongoing.png"></div>
+			<div class="event-title">Ongoing Game Events</div>
+		</div>
+		<div id="completed" class="game" onclick="navigateTo('completed.html')">
+			<div class="game-icon"><img src="img/completed.png"></div>
+			<div class="event-title">Completed Game Events</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	function logout() {
+            window.location.href = "home.html";
+        }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+</script>
+</html>

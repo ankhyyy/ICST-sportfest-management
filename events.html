@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Game Schedule</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+        }
+        body {
+            font-family: 'Poppins';
+            background: #FDE74C;
+            position: relative; /* Necessary for absolute positioning */
+            min-height: 1000vh; /* Ensures the body takes at least the height of the viewport */
+        }
+        .main-header {
+            text-align: center;
+            position: relative; /* Required for positioning the icons */
+        }
+        .main-header img {
+            max-width: 100%; /* Ensures the image doesn't exceed its container */
+            height: auto; /* Ensures the image retains its aspect ratio */
+        }
+        .nav-icon {
+            position: absolute;
+            top: 20%; /* Adjust vertical position */
+            left: 50%; /* Adjust horizontal position */
+            transform: translate(-50%, -50%); /* Center the icon */
+            z-index: 1; /* Ensure the icon is above the image */
+            display: flex;
+        }
+        .nav-icon button {
+            background: #fff;
+            width: auto;
+            height: 60px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: center; /* Align items horizontally */
+            font-size: 24px;
+            color: #000;
+            margin-right: 10px;
+            padding: 10px;
+        }
+
+        .material-symbols-outlined {
+            font-size: 23px;
+        }
+        .sports-name {
+            font-family: 'Poppins SemiBold';
+            font-size: 12px;
+        }
+        .game-nav {
+            background: #fff;
+            bottom: 0;
+            position: fixed; /* Change position to fixed */
+            width: 100%;
+            border-top: 2px solid #000;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            justify-content: center;
+            z-index: 3; /* Set a higher z-index to ensure it's above the schedules */
+        }
+
+        .game-nav div {
+            text-align: center; /* Center align text in columns */
+            padding: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #000;
+            padding: 0 200px 0 200px;
+            font-family: 'Poppins SemiBold';
+        }
+
+        #upcoming {
+            background: #EDE6D6;
+        }
+
+        #ongoing {
+            background: #FFFDFD;
+        }
+
+        #completed {
+            background: #FFF6E3;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #09860b;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 2;
+            margin-bottom: 40px;
+        }
+        .floating-menu {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            display: none;
+            flex-direction: column;
+            background-color: #09860b;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1;
+        }
+        .floating-menu button {
+            font-family: 'Poppins SemiBold';
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #000;
+            cursor: pointer;
+        }
+        .floating-menu button:hover {
+            background-color: #8dd06c;
+        }
+
+        .material-icons {
+            font-family: 'Material Icons'; /* Specify the font family */
+            font-size: 24px; /* Adjust icon size */
+        }
+
+        .action {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        #editScheduleModal {
+            display: none;
+            background: #fff;
+            width: 450px;
+            height: 630px;
+            padding: 20px;
+            margin: auto; /* Center horizontally */
+            position: absolute;
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center vertically and horizontally */
+            border: 4px solid #fff;
+            border-radius: 15px;
+            z-index: 9999;
+        }
+
+        input {
+            border: 2px solid #000;
+            border-radius: 10px;
+            font-family: 'Poppins';
+            width: 400px;    
+        }
+
+        select {
+            border: 2px solid #000;
+            border-radius: 7px; 
+            height: 30px;
+            width: 400px;  
+            font-family: 'Poppins'
+
+        }
+
+        #editTeam1 {
+            margin-bottom: 7px;
+        }
+
+        #editScheduleForm label {
+            flex: 1 0 100%;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        #editScheduleForm input {
+            flex: 1 0 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        div, h1, h2, h3 {
+            margin: 0;
+            font-size: 15px;
+            text-align: left;
+            font-family: 'Poppins SemiBold';
+        }
+
+        h1 {
+          color: #333;
+          font-family: 'Poppins Black';
+          text-transform: uppercase;
+          text-align: center;
+          font-size: 30px;
+        }
+
+        h2 {
+          margin-bottom: 5px;
+        }
+
+        h3 {
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
+
+        option {
+            font-family: 'Poppins';
+        }
+
+        #clock {
+        margin-bottom: 5px;
+    }
+
+        #sched input {
+            width: 200px;
+        }
+
+        #save {
+            background: #09860b;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Poppins';
+            margin-top: 10px;
+        }
+
+        .close {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+            z-index: 9998; /* Ensure it's below the modal */
+            display: none; /* Hide by default */
+            backdrop-filter: blur(5px); /* Apply blur effect */
+        }
+        
+        .progress {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .5em;
+        }
+
+        .table-container {
+            text-align: center;
+        }
+
+        th {
+            background-color: #09860b;
+            color: #ffffff;
+            text-align: center;
+            font-family: 'Poppins SemiBold';
+            font-size: 1.15em;
+            text-align: center;
+            padding: 5px 20px;
+        }
+
+        #scheduleTable {
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: 'Poppins';
+            margin: 0 auto; /* Center horizontally */
+            width: 80%; /* Adjust the width as needed */
+            max-width: 900px; /* Set a maximum width to prevent the table from stretching too wide */
+            min-width: 930px; /* Set a minimum width to ensure proper layout */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.30); /* Add a shadow effect */
+            background: #fff; /* Set a background color */
+            text-align: center; /* Center align the content */
+        }
+
+        #ongoingTable {
+            display: none;
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: 'Poppins';
+            margin: 0 auto; /* Center horizontally */
+            width: 50%; /* Adjust the width as needed */
+            max-width: 700px; /* Set a maximum width to prevent the table from stretching too wide */
+            min-width: 880px; /* Set a minimum width to ensure proper layout */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.30); /* Add a shadow effect */
+            background: #fff; /* Set a background color */
+            text-align: center; /* Center align the content */
+        }
+
+        #completedTable {
+            border-collapse: collapse;
+            font-size: 1em;
+            font-family: 'Poppins';
+            margin: 0 auto; /* Center horizontally */
+            width: 50%; /* Adjust the width as needed */
+            max-width: 700px; /* Set a maximum width to prevent the table from stretching too wide */
+            min-width: 500px; /* Set a minimum width to ensure proper layout */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.30); /* Add a shadow effect */
+            background: #fff; /* Set a background color */
+            text-align: center; /* Center align the content */
+        }
+
+        .sportsbtn:active {
+            background-color: #a4de02;
+            box-shadow: 0 5px #fff;
+            transform: translateY(4px);
+        }
+
+        .search-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            background-color: #09860b;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 2;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-header">
+        <img src="img/head.svg" alt="Header Image">
+        <div class="nav-icon">
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Dama')">
+                <span class="material-symbols-outlined">sports_and_outdoors</span>
+                <span class="sports-name">Dama</span>
+            </button>  
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Basketball')">
+                <span class="material-symbols-outlined">sports_basketball</span>
+                <span class="sports-name">Basketball</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Volleyball')">
+                <span class="material-symbols-outlined">sports_volleyball</span>
+                <span class="sports-name">Volleyball</span>
+            </button>      
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Table Tennis')">
+                <span class="material-symbols-outlined" style="border: none;">sports_tennis</span>
+                <span class="sports-name">Table Tennis</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Chess')">
+                <span class="material-symbols-outlined" style="border: none;">chess</span>
+                <span class="sports-name">Chess</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Badminton')">
+                <span class="material-symbols-outlined" style="border: none;">sports_tennis</span>
+                <span class="sports-name">Badminton</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Athletics')">
+                <span class="material-symbols-outlined" style="border: none;">sprint</span>
+                <span class="sports-name">Athletics</span>
+            </button>
+            <button onclick="filterSchedulesBySport('Long Jump')">
+                <span class="material-symbols-outlined" style="border: none;">falling</span>
+                <span class="sports-name">Long Jump</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Scrabble')">
+                <span class="material-symbols-outlined" style="border: none;">neurology</span>
+                <span class="sports-name">Scrabble</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Sungka')">
+                <span class="material-symbols-outlined" style="border: none;">cognition</span>
+                <span class="sports-name">Sungka</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Shot Put')">
+                <span class="material-symbols-outlined">sports_handball</span>
+                <span class="sports-name">Shot Put</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Darts')">
+                <span class="material-symbols-outlined">track_changes</span>
+                <span class="sports-name">Darts</span>
+            </button>
+            <button class="sportsbtn" onclick="filterSchedulesBySport('Mobile Legends')">
+                <span class="material-symbols-outlined">sports_esports</span>
+                <span class="sports-name">ML</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="game-nav">
+    <div id="upcoming">
+        <a href="#" id="upcoming-link">upcoming</a>
+    </div>
+    <div id="ongoing">
+        <a href="#" id="ongoing-link">ongoing</a>
+    </div>
+    <div id="completed">
+        <a href="#" id="completed-link">completed</a>
+    </div>
+</div>
+
+    <div id="upcomingTableContainer" class="table-container">
+        <table id="scheduleTable" style="display: block;">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Sport</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Progress</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- table for ongoing games -->
+<div id="ongoingTableContainer" class="table-container" >
+    <table id="ongoingTable">
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Sport</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Delete</th>
+            <th>Progress</th>
+        </tr>
+    </table>
+</div>
+
+    <!-- table for completed games -->
+    <div id="completedTableContainer" class="table-container" style="display: none;">
+        <table id="completedTable">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Sport</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
+                <th>Delete</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Edit Schedule Popup -->
+<div id="editScheduleModal" class="modal">
+<input type="hidden" id="editedRowIndex" />
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h1>Edit Schedule</h1>
+        <form id="editScheduleForm">
+            <div class="date" >
+                <h2>Date</h2>
+                <input type="date" id="editDate" class="sched" >
+            </div>
+            
+            <div class="time" >
+                <h2>Time</h2>
+                <input type="time" id="editTime" class="sched" >
+            </div>
+
+            <div>
+                <h2>Game</h2>
+                <select id="editSport" >
+                    <option value="" disabled selected>Select Sports</option>
+                    <option value="Basketball" >Basketball</option>
+                    <option value="Dama" >Dama</option>
+                    <option value="Volleyball" >Volleyball</option>
+                    <option value="Sepak Takraw" >Sepak Takraw</option>
+                    <option value="Table Tennis" >Table Tennis</option>
+                    <option value="Chess">Chess</option>
+                    <option value="Badminton" >Badminton</option>
+                    <option value="Athletics" >Athletics</option>
+                    <option value="Long Jump" >Long Jump</option>
+                    <option value="Scrabble" >Scrabble</option>
+                    <option value="Sungka" >Sungka</option>
+                    <option value="Shot Put" >Shot Put</option>
+                    <option value="Darts" >Darts</option>
+                    <option value="Mobile Legends" >Mobile Legends</option>
+                </select>
+            </div>
+            <div>
+            <h3>Category</h3>
+                <select id="editCategory" >
+                <option disabled selected>Select Category</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+
+            <div>
+            <h3>Type</h3>
+                <select id="editType" >
+                    <option disabled selected>Select Type</option>
+                    <option>Single</option>
+                    <option>Double</option>
+                    <option>Team</option>
+                </select>
+            </div>
+
+            <div>
+            <h3>Match</h3>
+                <select id="editTeam1" >
+                    <option value="" disabled selected>Select Department here</option>
+                    <option value="BSHM">BSHM </option>
+                    <option value="BSIT">BSIT </option>
+                    <option value="BSCRIM">BSCRIM </option>
+                    <option value="BSED">BSED </option>
+                    <option value="BSBA">BSBA </option>
+                </select>
+
+            <select id="editTeam2" >
+        <option value="" disabled selected>Select Department here</option>
+        <option value="BSHM">BSHM </option>
+        <option value="BSIT">BSIT </option>
+        <option value="BSCRIM">BSCRIM </option>
+        <option value="BSED">BSED </option>
+        <option value="BSBA">BSBA </option>
+            </select>
+            </div>
+        <button type="submit" id="save">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+    <!-- search bar -->
+
+    <!-- <div class="search-icon">
+        <i class="fa fa-search con" id="search"></i>
+    </div> -->
+
+
+       <!-- Floating button -->
+    <div class="floating-button" onclick="toggleMenu()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <!-- Floating menu -->
+    <div class="floating-menu" id="floatingMenu">
+        <button id="create" onclick="create()">Create</button>
+        <button id="logout" onclick="logout()">Log Out</button>
+    </div>
+    <div id="overlay"></div>
+
+</body>
+<script type="text/javascript">
+     function toggleMenu() {
+            var menu = document.getElementById("floatingMenu");
+            if (menu.style.display === "none" || menu.style.display === "") {
+                menu.style.display = "flex";
+            } else {
+                menu.style.display = "none";
+            }
+        }
+
+        function create() {
+            window.open("create.html");
+        }
+
+        function logout() {
+            window.location.href = "home.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener for the upcoming-link
+    document.getElementById('upcoming-link').addEventListener('click', function() {
+        // Show the scheduleTable and hide other tables
+        document.getElementById('scheduleTable').style.display = 'block';
+        document.getElementById('ongoingTableContainer').style.display = 'none';
+        document.getElementById('completedTableContainer').style.display = 'none';
+    });
+
+    // Add event listener for the ongoing-link
+    document.getElementById('ongoing-link').addEventListener('click', function() {
+        // Show the ongoingTable and completedTable
+        document.getElementById('scheduleTable').style.display = 'none';
+        document.getElementById('ongoingTableContainer').style.display = 'block';
+        document.getElementById('completedTableContainer').style.display = 'none';
+    });
+
+    // Add event listener for the completed-link
+    document.getElementById('completed-link').addEventListener('click', function() {
+        // Show the completedTable and hide other tables
+        document.getElementById('scheduleTable').style.display = 'none';
+        document.getElementById('ongoingTableContainer').style.display = 'none';
+        document.getElementById('completedTableContainer').style.display = 'block';
+    });
+        // Retrieve the saved schedules from localStorage
+        var scheduleString = localStorage.getItem('schedules');
+if (scheduleString) {
+    var schedules = JSON.parse(scheduleString);
+
+    // Retrieve the table element
+    var table = document.getElementById('scheduleTable');
+
+    // Iterate over each schedule
+    schedules.forEach(function(schedule) {
+        // Create a new row
+        var newRow = table.insertRow();
+
+        // Insert cells for each field
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+        var cell5 = newRow.insertCell(4);
+        var cell6 = newRow.insertCell(5);
+        var cell7 = newRow.insertCell(6);
+        var cell8 = newRow.insertCell(7); // Edit button
+        var cell9 = newRow.insertCell(8); // Delete button
+        var cell10 = newRow.insertCell(9); // For ongoing button
+
+        // Populate cells with schedule information
+        cell1.innerHTML = schedule.date !== null && schedule.date !== undefined ? schedule.date : '';
+        cell2.innerHTML = schedule.time;
+        cell3.innerHTML = schedule.sport;
+        cell4.innerHTML = schedule.category;
+        cell5.innerHTML = schedule.type;
+        cell6.innerHTML = schedule.team1;
+        cell7.innerHTML = schedule.team2;
+        cell8.innerHTML = '<button class="action" title="Edit" onclick="editSchedule(' + (newRow.rowIndex - 1) + ')"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
+        cell9.innerHTML = '<button class="action" title="Delete" onclick="deleteSchedule(' + (newRow.rowIndex - 1) + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+        cell10.innerHTML = '<button class="progress" title="Move to Ongoing" onclick="ongoingGame(' + (newRow.rowIndex - 1) + ')"><span class="material-symbols-outlined" style="font-size:18px;">progress_activity</span></button>';
+            });
+        }
+    });
+        
+    
+    function deleteSchedule(rowIndex) {
+    // Retrieve the saved schedules from localStorage
+    var scheduleString = localStorage.getItem('schedules');
+    if (scheduleString) {
+        var schedules = JSON.parse(scheduleString);
+        
+        // Remove the schedule at the specified rowIndex
+        schedules.splice(rowIndex, 1);
+        
+        // Update the localStorage with the modified schedules array
+        localStorage.setItem('schedules', JSON.stringify(schedules));
+        
+        // Reload the table to reflect the changes
+        loadSchedules();
+    }
+}
+
+// Function to filter schedules by sport
+function filterSchedulesBySport(sport) {
+    loadSchedules(sport);
+}
+
+// Modified loadSchedules function to accept an optional parameter for sport filtering
+function loadSchedules(sportFilter) {
+    var table = document.getElementById('scheduleTable');
+    var tbody = table.getElementsByTagName('tbody')[0]; // Get the table body
+
+    // Clear existing table rows except the header row
+    while (tbody.rows.length > 1) {
+        tbody.deleteRow(1);
+    }
+
+    // Retrieve the saved schedules from localStorage
+    var scheduleString = localStorage.getItem('schedules');
+    if (scheduleString) {
+        var schedules = JSON.parse(scheduleString);
+
+        // Iterate over each schedule
+        schedules.forEach(function(schedule) {
+            // Check if sportFilter is provided and matches the current schedule
+            if (!sportFilter || schedule.sport === sportFilter) {
+                // Create a new row
+                var newRow = tbody.insertRow();
+
+                // Insert cells for each field
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+                var cell6 = newRow.insertCell(5);
+                var cell7 = newRow.insertCell(6);
+                var cell8 = newRow.insertCell(7); // Edit button
+                var cell9 = newRow.insertCell(8); // Delete button
+                var cell10 = newRow.insertCell(9); // For ongoing button
+
+                // Populate cells with schedule information
+                cell1.innerHTML = schedule.date !== null && schedule.date !== undefined ? schedule.date : '';
+                cell2.innerHTML = schedule.time;
+                cell3.innerHTML = schedule.sport;
+                cell4.innerHTML = schedule.category;
+                cell5.innerHTML = schedule.type;
+                cell6.innerHTML = schedule.team1;
+                cell7.innerHTML = schedule.team2;
+                cell8.innerHTML = '<button class="action" title="Edit" onclick="editSchedule(' + (newRow.rowIndex - 1) + ')"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
+                cell9.innerHTML = '<button class="action" title="Delete" onclick="deleteSchedule(' + (newRow.rowIndex - 1) + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                cell10.innerHTML = '<button class="progress" title="Move to Ongoing" onclick="ongoingGame(' + (newRow.rowIndex - 1) + ')"><span class="material-symbols-outlined" style="font-size:18px;">progress_activity</span></button>';
+            }
+        });
+    }
+}
+
+// Function to open the edit modal with pre-populated data
+function openEditModal(rowIndex) {
+    var modal = document.getElementById("editScheduleModal");
+    modal.style.display = "block";
+
+    // Show the overlay
+    document.getElementById("overlay").style.display = "block";
+
+    // Retrieve the schedule data from the table
+    var table = document.getElementById('scheduleTable');
+    var row = table.rows[rowIndex + 1]; // rowIndex + 1 to skip header row
+
+    // Populate form fields with schedule data
+    document.getElementById("editDate").value = row.cells[0].innerHTML;
+    document.getElementById("editTime").value = row.cells[1].innerHTML;
+    document.getElementById("editSport").value = row.cells[2].innerHTML;
+    document.getElementById("editCategory").value = row.cells[3].innerHTML;
+    document.getElementById("editType").value = row.cells[4].innerHTML;
+    document.getElementById("editTeam1").value = row.cells[5].innerHTML;
+    document.getElementById("editTeam2").value = row.cells[6].innerHTML;
+
+    // Store the index of the edited row in a hidden input field
+    document.getElementById("editedRowIndex").value = rowIndex;
+}
+
+document.getElementById("editScheduleForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Retrieve form data
+    var editedSchedule = {
+        date: document.getElementById("editDate").value,
+        time: document.getElementById("editTime").value,
+        sport: document.getElementById("editSport").value,
+        category: document.getElementById("editCategory").value,
+        type: document.getElementById("editType").value,
+        team1: document.getElementById("editTeam1").value,
+        team2: document.getElementById("editTeam2").value
+    };
+
+    // Retrieve the index of the edited row
+    var editedRowIndex = parseInt(document.getElementById("editedRowIndex").value);
+
+    // Retrieve the saved schedules from localStorage
+    var scheduleString = localStorage.getItem('schedules');
+    if (scheduleString) {
+        var schedules = JSON.parse(scheduleString);
+
+        // Update the schedule data in the schedules array
+        schedules[editedRowIndex] = editedSchedule;
+
+        // Update the localStorage with the modified schedules array
+        localStorage.setItem('schedules', JSON.stringify(schedules));
+
+        // Reload the entire table
+        loadSchedules();
+    }
+
+    // Close the modal after saving changes
+    closeEditModal();
+});
+
+
+// Function to handle editing a schedule
+function editSchedule(rowIndex) {
+    // Open the edit modal with the details of the clicked row
+    openEditModal(rowIndex);
+}
+
+function closeEditModal() {
+    var modal = document.getElementById("editScheduleModal");
+    modal.style.display = "none";
+
+    // Hide the overlay
+    document.getElementById("overlay").style.display = "none";
+}
+
+function ongoingGame(rowIndex) {
+    // Retrieve the schedule data from the clicked row
+    var table = document.getElementById('scheduleTable');
+    var row = table.rows[rowIndex + 1]; // rowIndex + 1 to skip header row
+
+    var ongoingTable = document.getElementById('ongoingTable');
+
+    // Create a new row for the ongoing games table
+    var newRow = ongoingTable.insertRow();
+    // Copy cell contents from the original row to the ongoing games table row
+    for (var i = 0; i < row.cells.length; i++) {
+        if (i !== 7 && i !== 9) { // Exclude Edit and Ongoing buttons
+            var newCell = newRow.insertCell();
+            newCell.innerHTML = row.cells[i].innerHTML;
+        }
+    }
+
+    // // Add delete button cell
+    var deleteCell = newRow.insertCell();
+    deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+
+    // Add progress button cell
+    var progressCell = newRow.insertCell();
+    progressCell.innerHTML = '<button class="progress" title="Mark as Completed" onclick="markCompleted(this)"><span class="material-symbols-outlined" style="font-size:18px;">done</span></button>';
+
+    // Remove the schedule from the original table
+    table.deleteRow(rowIndex + 1);
+
+    // Display the ongoing games table
+    document.getElementById('ongoingTableContainer').style.display = 'block';
+
+    // Retrieve the saved ongoing games from localStorage
+    var ongoingGamesString = localStorage.getItem('ongoingGames');
+    var ongoingGames = ongoingGamesString ? JSON.parse(ongoingGamesString) : [];
+
+    // Push the ongoing game data to the ongoing games array
+    var ongoingGameData = {
+        date: row.cells[0].innerHTML,
+        time: row.cells[1].innerHTML,
+        sport: row.cells[2].innerHTML,
+        category: row.cells[3].innerHTML,
+        type: row.cells[4].innerHTML,
+        team1: row.cells[5].innerHTML,
+        team2: row.cells[6].innerHTML
+    };
+    ongoingGames.push(ongoingGameData);
+
+    // Update the localStorage with the modified ongoing games array
+    localStorage.setItem('ongoingGames', JSON.stringify(ongoingGames));
+}
+
+
+// Function to load ongoing games from localStorage when the page loads
+function loadOngoingGames() {
+    // Retrieve the saved ongoing games from localStorage
+    var ongoingGamesString = localStorage.getItem('ongoingGames');
+    if (ongoingGamesString) {
+        var ongoingGames = JSON.parse(ongoingGamesString);
+
+        // Retrieve the ongoing games table
+        var ongoingTable = document.getElementById('ongoingTable');
+
+        // Iterate over each ongoing game
+        ongoingGames.forEach(function(game) {
+            // Create a new row for the ongoing games table
+            var newRow = ongoingTable.insertRow();
+            // Insert cells for each field
+            for (var prop in game) {
+                var newCell = newRow.insertCell();
+                newCell.innerHTML = game[prop];
+            }
+
+            // Add delete button cell
+            var deleteCell = newRow.insertCell();
+            deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+
+            // Add progress button cell
+            var progressCell = newRow.insertCell();
+            progressCell.innerHTML = '<button class="progress" title="Mark as Completed" onclick="markCompleted(this)"><span class="material-symbols-outlined" style="font-size:18px;">done</span></button>';
+        });
+
+        // Display the ongoing games table
+        document.getElementById('ongoingTableContainer').style.display = 'block';
+    }
+}
+
+// Function to delete ongoing game
+function deleteOngoingGame(button) {
+    var row = button.parentNode.parentNode;
+    var index = row.rowIndex;
+    var table = row.parentNode;
+    table.deleteRow(index);
+
+    // Retrieve the saved ongoing games from localStorage
+    var ongoingGamesString = localStorage.getItem('ongoingGames');
+    if (ongoingGamesString) {
+        var ongoingGames = JSON.parse(ongoingGamesString);
+
+        // Remove the ongoing game at the specified index
+        ongoingGames.splice(index - 1, 1);
+
+        // Update the localStorage with the modified ongoing games array
+        localStorage.setItem('ongoingGames', JSON.stringify(ongoingGames));
+    }
+}
+
+
+// Function to handle showing the ongoing games table
+function showOngoingTable() {
+    // Hide other tables if necessary
+    document.getElementById('scheduleTable').style.display = 'none';
+    // If you have another table for completed games, hide it as well
+    document.getElementById('completedTableContainer').style.display = 'none';
+
+    // Display the ongoing games table
+    document.getElementById('ongoingTable').style.display = 'block';
+}
+
+// Call the loadOngoingGames function when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    loadOngoingGames();
+});
+
+// Attach an event listener to the ongoing link to show the ongoing games table
+document.getElementById('ongoing-link').addEventListener('click', function() {
+    showOngoingTable();
+});
+
+
+function markCompleted(button) {
+    // Retrieve the clicked row
+    var row = button.parentNode.parentNode;
+    var index = row.rowIndex;
+    var table = row.parentNode;
+
+    // Retrieve the saved ongoing games from localStorage
+    var ongoingGamesString = localStorage.getItem('ongoingGames');
+    if (ongoingGamesString) {
+        var ongoingGames = JSON.parse(ongoingGamesString);
+
+        // Remove the ongoing game at the specified index
+        var completedGame = ongoingGames.splice(index - 1, 1)[0];
+
+        // Update the localStorage with the modified ongoing games array
+        localStorage.setItem('ongoingGames', JSON.stringify(ongoingGames));
+    }
+
+    // Remove the row from the table
+    table.deleteRow(index);
+
+    // Retrieve the saved completed games from localStorage
+    var completedGamesString = localStorage.getItem('completedGames');
+    var completedGames = completedGamesString ? JSON.parse(completedGamesString) : [];
+
+    // Add the completed game to the completed games array
+    completedGames.push(completedGame);
+
+    // Update the localStorage with the modified completed games array
+    localStorage.setItem('completedGames', JSON.stringify(completedGames));
+
+    // Show the completed games table
+    showCompletedTable();
+}
+
+
+// Function to show the completed games table
+function showCompletedTable() {
+    // Hide other tables if necessary
+    document.getElementById('scheduleTable').style.display = 'none';
+    document.getElementById('ongoingTableContainer').style.display = 'none';
+
+    // Display the completed games table
+    document.getElementById('completedTableContainer').style.display = 'block';
+
+    // Load completed games
+    loadCompletedGames();
+}
+
+
+// Attach an event listener to the completed link to show the completed games table
+document.getElementById('completed-link').addEventListener('click', function() {
+    console.log("Completed link clicked"); // Check if this message is logged in the console
+    showCompletedTable();
+});
+
+
+// Function to load completed games and display them in the table
+function loadCompletedGames() {
+    var table = document.getElementById('completedTable');
+    var tbody = table.getElementsByTagName('tbody')[0]; // Get the table body
+
+    // Clear existing table rows except the header row
+    while (tbody.rows.length > 1) {
+        tbody.deleteRow(1);
+    }
+
+    // Retrieve the saved completed games from localStorage
+    var completedGamesString = localStorage.getItem('completedGames');
+    if (completedGamesString) {
+        var completedGames = JSON.parse(completedGamesString);
+
+        // Iterate over each completed game
+        completedGames.forEach(function(game) {
+            // Create a new row
+            var newRow = tbody.insertRow();
+
+            // Insert cells for each field
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+            var cell6 = newRow.insertCell(5);
+            var cell7 = newRow.insertCell(6);
+
+
+            // Populate cells with completed game information
+            cell1.textContent = game.date;
+            cell2.textContent = game.time;
+            cell3.textContent = game.sport;
+            cell4.textContent = game.category;
+            cell5.textContent = game.type;
+            cell6.textContent = game.team1;
+            cell7.textContent = game.team2;
+            
+            // Add delete button cell
+            var deleteCell = newRow.insertCell();
+            deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteCompletedGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+
+        });
+    }
+}
+
+// Function to delete a completed game
+function deleteCompletedGame(button) {
+    var row = button.parentNode.parentNode;
+    var index = row.rowIndex;
+    var table = row.parentNode;
+    table.deleteRow(index);
+
+    // Retrieve the saved completed games from localStorage
+    var completedGamesString = localStorage.getItem('completedGames');
+    if (completedGamesString) {
+        var completedGames = JSON.parse(completedGamesString);
+
+        // Remove the completed game at the specified index
+        completedGames.splice(index - 1, 1);
+
+        // Update the localStorage with the modified completed games array
+        localStorage.setItem('completedGames', JSON.stringify(completedGames));
+    }
+}
+        // Function to filter schedules by sport for all tables (schedule, ongoing, and completed)
+function filterSchedulesBySport(sport) {
+    // Apply filter to scheduleTable
+    loadSchedules(sport);
+
+    // Apply filter to ongoingTable
+    filterOngoingGamesBySport(sport);
+
+    // Apply filter to completedTable
+    filterCompletedGamesBySport(sport);
+}
+
+// Function to filter ongoing games by sport
+function filterOngoingGamesBySport(sport) {
+    var table = document.getElementById('ongoingTable');
+
+    // Clear existing rows except the header row
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+
+    // Retrieve the saved ongoing games from localStorage
+    var ongoingGamesString = localStorage.getItem('ongoingGames');
+    if (ongoingGamesString) {
+        var ongoingGames = JSON.parse(ongoingGamesString);
+
+        // Iterate over each ongoing game
+        ongoingGames.forEach(function(game) {
+            // Check if sport matches the filter
+            if (!sport || game.sport === sport) {
+                // Create a new row for the ongoing games table
+                var newRow = table.insertRow();
+                // Insert cells for each field
+                for (var prop in game) {
+                    var newCell = newRow.insertCell();
+                    newCell.textContent = game[prop];
+                }
+
+                // Add delete button cell
+                var deleteCell = newRow.insertCell();
+                deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteOngoingGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+
+                // Add progress button cell
+                var progressCell = newRow.insertCell();
+                progressCell.innerHTML = '<button class="progress" title="Mark as Completed" onclick="markCompleted(this)"><span class="material-symbols-outlined" style="font-size:18px;">done</span></button>';
+            }
+        });
+    }
+}
+
+    // Function to filter completed games by sport
+    function filterCompletedGamesBySport(sport) {
+        var table = document.getElementById('completedTable');
+
+        // Clear existing rows except the header row
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+
+        // Retrieve the saved completed games from localStorage
+        var completedGamesString = localStorage.getItem('completedGames');
+        if (completedGamesString) {
+            var completedGames = JSON.parse(completedGamesString);
+
+            // Iterate over each completed game
+            completedGames.forEach(function(game) {
+                // Check if sport matches the filter
+                if (!sport || game.sport === sport) {
+                    // Create a new row
+                    var newRow = table.insertRow();
+
+                    // Insert cells for each field
+                    var cell1 = newRow.insertCell(0);
+                    var cell2 = newRow.insertCell(1);
+                    var cell3 = newRow.insertCell(2);
+                    var cell4 = newRow.insertCell(3);
+                    var cell5 = newRow.insertCell(4);
+                    var cell6 = newRow.insertCell(5);
+                    var cell7 = newRow.insertCell(6);
+
+                    // Populate cells with completed game information
+                    cell1.textContent = game.date;
+                    cell2.textContent = game.time;
+                    cell3.textContent = game.sport;
+                    cell4.textContent = game.category;
+                    cell5.textContent = game.type;
+                    cell6.textContent = game.team1;
+                    cell7.textContent = game.team2;
+
+                    // Add delete button cell
+                    var deleteCell = newRow.insertCell();
+                    deleteCell.innerHTML = '<button class="action" title="Delete" onclick="deleteCompletedGame(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                }
+            });
+        }
+    }
+
+</script>
+</html>
